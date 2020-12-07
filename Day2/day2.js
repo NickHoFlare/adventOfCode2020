@@ -1004,16 +1004,17 @@ const initDay2 = () => {
 };
 
 // 16-19 j: tgsjqjwjjjbcjtjjjjj
-const day2 = () => {
-  let passwords = initDay2();
+const part1 = () => {
+  console.log('commencing Part1...');
+  const passwords = initDay2();
   let validCount = 0;
 
   passwords.forEach((line) => {
     let [countRange, char, password] = line.split(' ');
-    let [minCount, maxCount] = countRange.split('-');
+    const [minCount, maxCount] = countRange.split('-');
     char = char.split(':')[0];
 
-    let matches = password.match(new RegExp(char, 'g'));
+    const matches = password.match(new RegExp(char, 'g'));
     const actualCount = matches ? matches.length : 0;
 
     if (actualCount >= minCount && actualCount <= maxCount) {
@@ -1023,4 +1024,30 @@ const day2 = () => {
   console.log(`number valid: ${validCount}`);
 };
 
-day2();
+const part2 = () => {
+  console.log('commencing Part2...');
+  const passwords = initDay2();
+  let validCount = 0;
+
+  passwords.forEach((line) => {
+    let [positions, char, password] = line.split(' ');
+    const [pos1, pos2] = positions.split('-');
+    char = char.split(':')[0];
+
+    const pos1Char = password.charAt(parseInt(pos1) - 1);
+    const pos2Char = password.charAt(parseInt(pos2) - 1);
+
+    const combinedChars = `${pos1Char}${pos2Char}`;
+
+    const matches = combinedChars.match(new RegExp(char, 'g'));
+    const actualCount = matches ? matches.length : 0;
+
+    if (actualCount === 1) {
+      validCount++;
+    }
+  });
+  console.log(`number valid: ${validCount}`);
+};
+
+part1();
+part2();
